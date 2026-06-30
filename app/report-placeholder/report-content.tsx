@@ -53,6 +53,8 @@ const reportToProfileKey: Record<ReportFileKey, EmotionalPersonalityKey> = {
   forest: "forest"
 };
 
+const unlockCode = "LOVE2026";
+
 function getReportKey(value: string | null): ReportFileKey {
   if (value === "flame") {
     return "fire";
@@ -165,7 +167,7 @@ function ReportContentInner({ reports }: ReportContentProps) {
   const reportKey = getReportKey(searchParams.get("type"));
   const profile = emotionalPersonalityProfiles[reportToProfileKey[reportKey]];
   const report = reports[reportKey];
-  const isUnlocked = searchParams.get("unlock") === "1";
+  const isUnlocked = searchParams.get("code") === unlockCode;
   const blocks = useMemo(() => (report ? parseMarkdown(report) : []), [report]);
   const tocItems = useMemo(
     () =>
@@ -409,7 +411,7 @@ function ReportContentInner({ reports }: ReportContentProps) {
               </div>
               <h2 className="text-2xl font-black text-[#3f2d2f]">完整版报告尚未解锁</h2>
               <p className="mt-3 text-sm font-bold leading-7 text-[#6b5557]">
-                请先完成付款确认，再查看你的完整人格成长报告。
+                请先完成付款并输入公众号回复的解锁码，再查看你的完整人格成长报告。
               </p>
               <Link
                 href={`/pay?type=${reportToProfileKey[reportKey]}`}

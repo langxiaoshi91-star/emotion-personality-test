@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense } from "react";
+import { FormEvent, Suspense, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -10,7 +10,7 @@ import {
   ReceiptText,
   WalletCards
 } from "lucide-react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   emotionalPersonalityProfiles,
   type EmotionalPersonalityKey
@@ -26,6 +26,8 @@ const personalityKeys = [
   "star",
   "forest"
 ] as const;
+
+const unlockCode = "LOVE2026";
 
 function getPersonalityKey(value: string | null): EmotionalPersonalityKey {
   if (value === "fire") {
@@ -56,9 +58,24 @@ function PayLoading() {
 }
 
 function PayContent() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const type = getPersonalityKey(searchParams.get("type"));
   const profile = emotionalPersonalityProfiles[type];
+  const [code, setCode] = useState("");
+  const [error, setError] = useState("");
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (code.trim().toUpperCase() !== unlockCode) {
+      setError("解锁码错误，请检查后重新输入。");
+      return;
+    }
+
+    setError("");
+    router.push(`/report-placeholder?type=${type}&code=${unlockCode}`);
+  };
 
   return (
     <main className="flex min-h-screen items-center justify-center px-4 py-6 sm:px-8">
@@ -144,29 +161,67 @@ function PayContent() {
                 <MessageCircle size={19} />
               </div>
               <p className="text-sm font-bold leading-7 text-[#674f52]">
-                付款后请截图发送到公众号【恋爱人格实验室】，客服确认后为你开通完整版报告。
+                付款后截图回到公众号【恋爱人格实验室】，发送关键词获取解锁码，再回到本页面输入。
               </p>
             </div>
           </section>
 
-          <div className="grid gap-3">
-            <div className="flex items-center gap-3 rounded-2xl bg-white px-4 py-3 text-sm font-bold text-[#674f52]">
-              <ReceiptText className="text-rose-600" size={18} />
-              暂时不做自动校验，客服会人工确认付款截图
+          <section className="rounded-[1.5rem] border border-rose-100 bg-white p-5">
+            <div className="mb-4 flex items-center gap-3">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-rose-50 text-rose-600">
+                <ReceiptText size={18} />
+              </div>
+              <h2 className="text-lg font-black text-[#3f2d2f]">解锁步骤</h2>
             </div>
-            <div className="flex items-center gap-3 rounded-2xl bg-white px-4 py-3 text-sm font-bold text-[#674f52]">
-              <CheckCircle2 className="text-emerald-600" size={18} />
-              支付完成后可先进入完整版报告页面
+            <div className="grid gap-3 text-sm font-bold leading-7 text-[#674f52]">
+              <p className="rounded-2xl bg-[#fff8f4] px-4 py-3">① 扫码支付 ¥9.9</p>
+              <p className="rounded-2xl bg-[#fff8f4] px-4 py-3">
+                ② 支付完成后，回公众号【恋爱人格实验室】
+              </p>
+              <p className="rounded-2xl bg-[#fff8f4] px-4 py-3">
+                ③ 发送关键词：已付款
+              </p>
+              <p className="rounded-2xl bg-[#fff8f4] px-4 py-3">
+                ④ 公众号会自动回复解锁码
+              </p>
+              <p className="rounded-2xl bg-[#fff8f4] px-4 py-3">
+                ⑤ 回到本页面输入解锁码，即可查看完整版报告
+              </p>
             </div>
-          </div>
+            <p className="mt-4 text-xs font-bold leading-6 text-[#927b7e]">
+              支持关键词：已付款、已支付、完成支付、支付完成、付款完成、我已付款、我已支付、已经付款、已经支付、付款了、支付了。
+            </p>
+          </section>
 
-          <Link
-            href={`/report-placeholder?type=${type}&unlock=1`}
-            className="flex w-full items-center justify-center gap-2 rounded-full bg-[#3f2d2f] px-5 py-4 text-base font-black text-white shadow-lg shadow-rose-200 transition hover:-translate-y-0.5 hover:bg-[#2f2022]"
+          <form
+            className="rounded-[1.5rem] border border-rose-100 bg-[#fff8f4] p-5"
+            onSubmit={handleSubmit}
           >
-            <CheckCircle2 size={18} />
-            我已支付，查看报告
-          </Link>
+            <h2 className="text-lg font-black text-[#3f2d2f]">输入解锁码</h2>
+            <input
+              value={code}
+              onChange={(event) => {
+                setCode(event.target.value);
+                if (error) {
+                  setError("");
+                }
+              }}
+              placeholder="请输入公众号回复的解锁码"
+              className="mt-4 w-full rounded-2xl border border-rose-100 bg-white px-4 py-4 text-base font-bold text-[#3f2d2f] outline-none transition placeholder:text-[#b8a7aa] focus:border-rose-300 focus:ring-4 focus:ring-rose-100"
+            />
+            {error && (
+              <p className="mt-3 rounded-2xl bg-white px-4 py-3 text-sm font-black text-rose-600">
+                {error}
+              </p>
+            )}
+            <button
+              type="submit"
+              className="mt-4 flex w-full items-center justify-center gap-2 rounded-full bg-[#3f2d2f] px-5 py-4 text-base font-black text-white shadow-lg shadow-rose-200 transition hover:-translate-y-0.5 hover:bg-[#2f2022]"
+            >
+              <CheckCircle2 size={18} />
+              验证并查看报告
+            </button>
+          </form>
         </div>
       </section>
     </main>
