@@ -93,27 +93,48 @@ function PayContent() {
             </div>
           </section>
 
-          <section className="grid gap-4 sm:grid-cols-2">
-            <div className="rounded-[1.5rem] border border-rose-100 bg-white p-4 text-center">
-              <p className="mb-3 text-base font-black text-[#3f2d2f]">微信收款码</p>
-              <Image
-                src="/wechat-pay.jpg"
-                alt="微信收款码"
-                width={520}
-                height={694}
-                className="mx-auto aspect-[3/4] w-full max-w-[260px] rounded-2xl border border-rose-100 object-cover"
-              />
-            </div>
+          <section className="rounded-[1.5rem] border border-rose-100 bg-white p-5 text-center">
+            <p className="text-base font-black text-[#3f2d2f]">请使用微信或支付宝扫码付款</p>
+            <p className="mt-1 text-sm font-bold text-[#927b7e]">支付金额 ¥9.9</p>
 
-            <div className="rounded-[1.5rem] border border-rose-100 bg-white p-4 text-center">
-              <p className="mb-3 text-base font-black text-[#3f2d2f]">支付宝收款码</p>
-              <Image
-                src="/alipay-pay.jpg"
-                alt="支付宝收款码"
-                width={520}
-                height={694}
-                className="mx-auto aspect-[3/4] w-full max-w-[260px] rounded-2xl border border-rose-100 object-cover"
-              />
+            <div className="mt-5 grid gap-4 sm:grid-cols-2">
+              <div className="rounded-[1.25rem] border border-rose-100 bg-[#fff8f4] p-4">
+                <p className="mb-3 text-sm font-black text-[#3f2d2f]">微信支付</p>
+                <div className="relative mx-auto flex h-[220px] max-w-[220px] items-center justify-center overflow-hidden rounded-[1.25rem] border border-rose-100 bg-white p-3 shadow-sm">
+                  <Image
+                    src="/wechat-qr-clean.jpg"
+                    alt="微信扫码支付二维码"
+                    width={448}
+                    height={400}
+                    className="max-h-full w-full rounded-xl object-contain"
+                  />
+                  <span className="absolute left-1/2 top-1/2 flex h-12 w-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-2xl border-4 border-white bg-emerald-500 text-sm font-black text-white shadow-md">
+                    微信
+                  </span>
+                </div>
+                <p className="mt-3 text-xs font-bold leading-5 text-[#927b7e]">
+                  微信扫一扫付款
+                </p>
+              </div>
+
+              <div className="rounded-[1.25rem] border border-rose-100 bg-[#fff8f4] p-4">
+                <p className="mb-3 text-sm font-black text-[#3f2d2f]">支付宝支付</p>
+                <div className="relative mx-auto flex h-[220px] max-w-[220px] items-center justify-center overflow-hidden rounded-[1.25rem] border border-rose-100 bg-white p-3 shadow-sm">
+                  <Image
+                    src="/alipay-qr-clean.jpg"
+                    alt="支付宝扫码支付二维码"
+                    width={960}
+                    height={880}
+                    className="max-h-full w-full rounded-xl object-contain"
+                  />
+                  <span className="absolute left-1/2 top-1/2 flex h-12 w-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-2xl border-4 border-white bg-sky-500 text-sm font-black text-white shadow-md">
+                    支付
+                  </span>
+                </div>
+                <p className="mt-3 text-xs font-bold leading-5 text-[#927b7e]">
+                  支付宝扫一扫付款
+                </p>
+              </div>
             </div>
           </section>
 

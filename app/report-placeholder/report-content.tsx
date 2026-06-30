@@ -165,6 +165,7 @@ function ReportContentInner({ reports }: ReportContentProps) {
   const reportKey = getReportKey(searchParams.get("type"));
   const profile = emotionalPersonalityProfiles[reportToProfileKey[reportKey]];
   const report = reports[reportKey];
+  const isUnlocked = searchParams.get("unlock") === "1";
   const blocks = useMemo(() => (report ? parseMarkdown(report) : []), [report]);
   const tocItems = useMemo(
     () =>
@@ -274,7 +275,7 @@ function ReportContentInner({ reports }: ReportContentProps) {
         </div>
 
         <div className="px-5 py-6 sm:px-10 sm:py-10">
-          {report ? (
+          {report && isUnlocked ? (
             <>
               {tocItems.length > 0 && (
                 <section className="mx-auto mb-8 max-w-[760px] rounded-[1.5rem] border border-rose-100 bg-[#fff8f4] p-5">
@@ -401,6 +402,22 @@ function ReportContentInner({ reports }: ReportContentProps) {
               })}
               </article>
             </>
+          ) : report ? (
+            <section className="mx-auto max-w-[560px] rounded-[1.5rem] border border-rose-100 bg-[#fff8f4] p-6 text-center">
+              <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-white text-rose-600">
+                <FileText size={26} />
+              </div>
+              <h2 className="text-2xl font-black text-[#3f2d2f]">完整版报告尚未解锁</h2>
+              <p className="mt-3 text-sm font-bold leading-7 text-[#6b5557]">
+                请先完成付款确认，再查看你的完整人格成长报告。
+              </p>
+              <Link
+                href={`/pay?type=${reportToProfileKey[reportKey]}`}
+                className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-[#3f2d2f] px-5 py-4 font-black text-white shadow-lg shadow-rose-200 transition hover:-translate-y-0.5"
+              >
+                去解锁完整版报告 ¥9.9
+              </Link>
+            </section>
           ) : (
             <div className="rounded-[1.5rem] border border-rose-100 bg-[#fff8f4] p-6 text-center">
               <p className="text-lg font-black text-[#3f2d2f]">报告加载失败，请重新测试。</p>
