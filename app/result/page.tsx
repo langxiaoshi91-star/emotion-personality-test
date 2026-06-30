@@ -356,7 +356,7 @@ function ResultContent() {
               className="flex w-full items-center justify-center gap-2 rounded-full bg-[#3f2d2f] px-5 py-4 text-base font-black text-white shadow-lg shadow-rose-200 transition hover:-translate-y-0.5 hover:bg-[#2f2022]"
             >
               <LockKeyhole size={18} />
-              👉 解锁我的完整人格报告（¥19.9）
+              👉 解锁完整版报告 ¥9.9
             </Link>
           </div>
         </section>
