@@ -188,9 +188,6 @@ function PayContent() {
                 ⑤ 回到本页面输入解锁码，即可查看完整版报告
               </p>
             </div>
-            <p className="mt-4 text-xs font-bold leading-6 text-[#927b7e]">
-              支持关键词：已付款、已支付、完成支付、支付完成、付款完成、我已付款、我已支付、已经付款、已经支付、付款了、支付了。
-            </p>
           </section>
 
           <form
